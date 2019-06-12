@@ -1,0 +1,73 @@
+<html lang="pt-BR" ng-app="listaCadastro">
+
+<head>
+    <meta charset="utf-8">
+    <title>Cadastro Clientes</title>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <script src="lib/angular.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controller/listaCadastroCtrl.js"></script>
+
+</head>
+
+<body ng-controller="listaCadastroCtrl">
+    <div class="jumbotron">
+        <h3>{{app}}</h3>
+
+        <table class="table table-striped" ng-show="cadastros.length > 0">
+            <tr>
+                <th></th>
+                <th>Nome: </th>
+                <th>CPF/CNPJ: </th>
+                <th>CEP: </th>
+                <th>Bairro: </th>
+                <th>Cidade: </th>
+                <th>Estado: </th>
+                <th>Logradouro: </th>
+                <th>Numero: </th>
+                <th>Complemento: </th>
+            </tr>
+            <tr ng-classe="selecionado" ng-repeat="cadastro in cadastros">
+                <td><input type="checkbox" ng-model="cadastro.selecionado" ng-show="!flagEditar && !flagSalvar" /> </td>
+                <td>{{cadastro.nome}} </td>
+                <td>{{cadastro.cpf}} </td>
+                <td>{{cadastro.cep}} </td>
+                <td>{{cadastro.bairro}} </td>
+                <td>{{cadastro.cidade.nome}} </td>
+                <td>{{cadastro.estado}} </td>
+                <td>{{cadastro.logradouro}}</td>
+                <td>{{cadastro.numero}} </td>
+                <td>{{cadastro.complemento}}</td>
+            </tr>
+
+        </table>
+        </hr>
+
+        <section ng-show="flagSalvar || flagEditar">
+
+            <select class="form-control" type="text" ng-model="cadastro.cidade" ng-options="cidade.nome for cidade in  cidades ">
+    			    <option  value=""> Selecione a cidade</option>
+    		</select>
+            <input class="form-control" type="text" ng-model="cadastro.nome" placeholder="Nome" ng-required="true" />
+            <input class="form-control" type="text" ng-model="cadastro.cpf" placeholder="CPF/CNPJ" />
+            <input class="form-control" type="text" ng-model="cadastro.email" placeholder="Endereço" />
+            <input class="form-control" type="text" ng-model="cadastro.telefone" placeholder="Tefelone" />
+            <input class="form-control" type="text" ng-model="cadastro.cep" placeholder="Cep" />
+            <input class="form-control" type="text" ng-model="cadastro.bairro" placeholder="Bairro" />
+            <input class="form-control" type="text" ng-model="cadastro.estado" placeholder="Estados" />
+            <input class="form-control" type="text" ng-model="cadastro.logradouro" placeholder="Logradouro" />
+            <input class="form-control" type="text" ng-model="cadastro.numero" placeholder="Numero" />
+            <input class="form-control" type="text" ng-model="cadastro.complemento" placeholder="Complemento" />
+        </section>
+
+        <button class="btn btn-primary btn-block" ng-click="adicionarCadastro(cadastro)" ng-if="cadastro.selecionado?flagSecelionado==true:flagSelecionado==false" ng-show="(!flagSalvar && !flagEditar) || flagEditar">Cadastrar Cliente</button>
+        <button class="btn btn-primary btn-block" ng-click="adicionarCadastro(cadastro)" ng-show="flagSalvar" ng-disabled=" !cadastro.nome || !cadastro.cidade || !cadastro.cpf || !cadastro.telefone">Salvar Cadastro</button>
+        <button class="btn btn-primary btn-block " ng-click="apagarCadastro(cadastros) " ng-show="!flagEditar && !flagSalvar">Apagar Contatos</button>
+        <button class="btn btn-primary btn-block " ng-click="editarCadastro()" ng-show="!flagEditar && !flagSalvar">Editar Cadastro</button>
+        <button class="btn btn-primary btn-block " ng-click="salvarCadastro()" ng-show="flagEditar">Salvar</button>
+    </div>
+
+</body>
+
+</html>
